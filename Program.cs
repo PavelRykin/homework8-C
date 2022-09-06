@@ -1,36 +1,4 @@
 ﻿/*
-Задача 54: Задайте двумерный массив. Напишите программу, которая упорядочит по убыванию элементы каждой строки двумерного массива.
-
-Например, задан массив:
-
-1 4 7 2
-
-5 9 2 3
-
-8 4 2 4
-
-В итоге получается вот такой массив:
-
-1 2 4 7
-
-2 3 5 9
-
-2 4 4 8
-
-Задача 56: Задайте прямоугольный двумерный массив. Напишите программу, которая будет находить строку с наименьшей суммой элементов.
-
-Например, задан массив:
-
-1 4 7 2
-
-5 9 2 3
-
-8 4 2 4
-
-5 2 6 7
-
-Программа считает сумму элементов в каждой строке и выдаёт номер строки с наименьшей суммой элементов: 1 строка
-
 Задача 58: Задайте две матрицы. Напишите программу, которая будет находить произведение двух матриц.
 
 Например, заданы 2 массива:
@@ -62,24 +30,72 @@
 56 8 4 24
 
 10 6 24 49
-
-Задача 60. Сформируйте трёхмерный массив из неповторяющихся двузначных чисел. Напишите программу, которая будет построчно выводить массив, добавляя индексы каждого элемента.
-
-массив размером 2 x 2 x 2
-
-12(0,0,0) 22(0,0,1)
-
-45(1,0,0) 53(1,0,1)
-
-Задача 62. Заполните спирально массив 4 на 4.
-
-Например, на выходе получается вот такой массив:
-
-1 2 3 4
-
-12 13 14 5
-
-11 16 15 6
-
-10 9 8 7
 */
+
+Console.WriteLine("Введите количество строк и столбцов первого двумерного массива через пробел!");
+string[] arr1 = Console.ReadLine().Split(" ");
+int row = int.Parse(arr1[0]);
+int column = int.Parse(arr1[1]);
+int[,] array1 = new int[row, column];
+Console.WriteLine("Введите количество строк и столбцов второго двумерного массива через пробел и они должны совпадать с первым!!");
+string[] arr2 = Console.ReadLine().Split(" ");
+row = int.Parse(arr2[0]);
+column = int.Parse(arr2[1]);
+int[,] array2 = new int[row, column];
+if (array1.GetLength(0) != array2.GetLength(0) && array1.GetLength(1) != array2.GetLength(1))
+{
+    Console.WriteLine("Количество строк и столбцов массивов не равны!");
+    return;
+}
+Console.WriteLine("Вот первый сгенерированный двумерный массив");
+CreateArray(array1);
+PrintArray(array1);
+Console.WriteLine("Вот второй сгенерированный двумерный массив");
+CreateArray(array2);
+PrintArray(array2);
+Console.WriteLine("Вот сумма обеих массивов");
+PrintArray(FindSumArray(array1, array2));
+
+
+void CreateArray(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            array[i, j] = new Random().Next(0, 10);
+        }
+    }
+}
+
+void PrintArray(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            Console.Write(array[i, j] + "\t");
+        }
+        Console.WriteLine();
+    }
+}
+
+int[,] FindSumArray(int[,] array1, int[,] array2)
+{
+    int[,] sumArray = new int[array1.GetLength(0), array1.GetLength(1)];
+    for (int i = 0; i < array1.GetLength(0); i++)
+    {
+        for (int j = 0; j < array1.GetLength(1); j++)
+        {
+            sumArray[i, j] += array1[i, j];
+        }
+    }
+    for (int i = 0; i < array2.GetLength(0); i++)
+    {
+        for (int j = 0; j < array2.GetLength(1); j++)
+        {
+            sumArray[i, j] += array2[i, j];
+        }
+    }
+    return sumArray;
+}
